@@ -1,0 +1,195 @@
+%
+%   2006/09/06 N.Fukuyasu (fukuyasu@sys.wakayama-u.ac.jp)
+%
+\typeout{和歌山大学システム工学部卒論レジュメ用スタイルファイル}
+
+%%
+%% ページ・レイアウト
+%%
+
+\setlength{\textwidth}{52zw}
+\setlength{\columnsep}{2zw}
+
+\setlength{\headsep}{15pt}
+
+\setlength{\textheight}{\paperheight} % \textheight = \paperheight - 4cm
+  \addtolength{\textheight}{-4cm}
+
+\setlength{\footskip}{\headheight} % \footskip = \headheight + \headsep
+  \addtolength{\footskip}{\headsep}
+
+\setlength{\oddsidemargin}{2cm} % \oddsidemargin = 2cm - 1inch
+  \addtolength{\oddsidemargin}{-1in}
+\setlength{\evensidemargin}{\oddsidemargin} % \evensidemargin = \oddsidemargin
+
+\setlength{\topmargin}{2cm} % \topmargin = 2cm - 1inch - (\headheight + \headsep)
+  \addtolength{\topmargin}{-1in}
+  \addtolength{\topmargin}{-\headheight}
+  \addtolength{\topmargin}{-\headsep}
+
+\setlength{\marginparsep}{0pt}
+\setlength{\marginparwidth}{0pt}
+\setlength{\marginparpush}{0pt}
+
+
+\topmargin = -0.54mm
+\headheight = 0mm
+\headsep = 0mm
+\footskip = 0mm
+\oddsidemargin = -4.54mm
+\textwidth = 50zw
+%\textwidth = 170mm
+\textheight = 250mm
+\columnsep = 2zw
+
+\def\topfraction{.8}    % 2ページに収めるために図表が大半を占めるページ
+\def\dbltopfraction{.8} % を許す設定(上から全体の8割まで可)
+
+\pagestyle{empty}  % ページ番号を付けない
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\@appendList#1#2{#1, #2}
+
+\global\let\@missed\empty	% 未設定Warningメッセージ用
+\def\missed#1{%
+  \ifx\@missed\empty\relax
+    \global\def\@missed{#1}
+  \else
+    \global\edef\@missed{\expandafter\@appendList{\@missed}{#1}}
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\let\@title\empty
+\def\タイトル#1{\def\@title{#1}}
+
+\let\@etitle\empty
+\def\英文タイトル#1{\def\@etitle{#1}}
+
+\let\@laboratory\empty
+\def\研究室#1{\def\@laboratory{#1}}
+
+\let\@studentid\empty
+\def\学生番号#1{\def\@studentid{#1}}
+
+\let\@author\empty
+\def\氏名#1{\def\@author{#1}}
+
+\let\@abstract\empty
+\def\概要#1{\def\@abstract{#1}}
+
+\let\@keyword\empty
+\def\キーワード#1{%
+  \ifx\@keyword\empty\relax
+    \def\@keyword{#1}
+  \else
+    \edef\@keyword{\expandafter\@appendList{\@keyword}{#1}}
+  \fi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\section}{\@startsection{section}{1}{0pt}%
+    {.5\baselineskip}%
+    {.2\baselineskip}%
+    {\reset@font\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
+    {.4\baselineskip}%
+    {.1\baselineskip}%
+    {\reset@font\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{\z@}%
+    {.4\baselineskip}%
+    {.1\baselineskip}%
+    {\reset@font\normalsize\bfseries}}
+\renewcommand{\paragraph}{\@startsection{paragraph}{4}{\z@}%
+    {.3\baselineskip}%
+    {-1zw}%
+    {\reset@font\normalsize\bfseries}}
+\renewcommand{\subparagraph}{\@startsection{subparagraph}{5}{\z@}%
+    {.3\baselineskip}%
+    {-1zw}%
+    {\reset@font\normalsize\bfseries}}
+
+\renewcommand{\@maketitle}{%
+  \begin{center}%
+    \ifx\@title\empty\relax\missed{タイトル}\else
+      {\Large\bf \@title \par}
+    \fi
+    \ifx\@etitle\empty\relax\missed{英文タイトル}\else
+      \medskip {\large\bf \@etitle \par}
+    \fi
+    \ifx\@author\empty\relax\missed{氏名}\else
+      \bigskip {\large
+        \ifx\@laboratory\empty\relax\missed{研究室名}\else
+	  \@laboratory{}研究室\hspace{24pt}
+	\fi
+	\ifx\@studentid\empty\relax\missed{学生番号}\else
+	  \@studentid{}\hspace{24pt}
+	\fi
+	\@author{} \par}
+    \fi
+    \medskip
+    \begin{quote}%
+      \ifx\@abstract\empty\relax\missed{概要}\else
+	{\small {\bf 概要：}\@abstract \par}
+      \fi
+      \ifx\@keyword\empty\relax\missed{キーワード}\else
+	{\small {\bf キーワード：}\@keyword \par}
+      \fi   
+    \end{quote}%
+    \medskip
+  \end{center}%
+  \ifx\@missed\empty\relax\else
+    \message{Warning: \@missed が入力されていません}
+  \fi
+  \global\let\@missed\empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewenvironment{enumerate}
+  {\ifnum \@enumdepth >\thr@@\@toodeep\else
+   \advance\@enumdepth\@ne
+   \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+   \list{\csname label\@enumctr\endcsname}{%
+         \parskip\z@ \itemsep\z@ \parsep\z@
+         \usecounter{\@enumctr}%
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\renewenvironment{itemize}
+  {\ifnum \@itemdepth >\thr@@\@toodeep\else
+   \advance\@itemdepth\@ne
+   \edef\@itemitem{labelitem\romannumeral\the\@itemdepth}%
+   \expandafter
+   \list{\csname \@itemitem\endcsname}{%
+         \parskip\z@ \itemsep\z@ \parsep\z@
+         \def\makelabel##1{\hss\llap{##1}}}%
+   \fi}{\endlist}
+
+\renewenvironment{description}
+  {\list{}{\labelwidth\z@ \itemindent-\leftmargin
+     \itemsep\z@
+     \listparindent\z@ \topskip\z@ \parskip\z@ \partopsep\z@
+           \let\makelabel\descriptionlabel}}{\endlist}
+
+\renewenvironment{thebibliography}[1]
+{\section*{\refname\@mkboth{\refname}{\refname}}%
+   \list{\@biblabel{\@arabic\c@enumiv}}%
+        {\settowidth\labelwidth{\@biblabel{#1}}%
+         \leftmargin\labelwidth
+         \advance\leftmargin\labelsep
+         \@openbib@code
+         \usecounter{enumiv}%
+         \let\p@enumiv\@empty
+         \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+         \parskip\z@ \itemsep3\p@ \parsep3\p@
+   \sloppy
+   \clubpenalty4000
+   \@clubpenalty\clubpenalty
+   \widowpenalty4000%
+   \sfcode`\.\@m}
+  {\def\@noitemerr
+    {\@latex@warning{Empty `thebibliography' environment}}%
+   \endlist}
+
+\endinput

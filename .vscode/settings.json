@@ -1,0 +1,29 @@
+{
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.intellisense.package.enabled": true,
+  "latex-workshop.latex.outDir": "out",
+  "latex-workshop.latex.autoBuild.run":"onFileChange",
+  "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latex.clean.fileTypes": [
+    "*.aux","*.bbl","*.blg","*.dvi","*.fdb_latexmk","*.fls","*.synctex.gz","*.toc"
+  ],
+  "latex-workshop.latex.recipes": [
+    {
+      "name": "latexmk",
+      "tools": ["latexmk"]
+    },
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": ["-outdir=%OUTDIR%","%DOC%.tex"]
+    },
+  ],
+  "cSpell.ignorePaths": [
+    ".latexmkrc",
+    "cspell.json",
+    ".vscode",
+    "out"
+  ]
+}
