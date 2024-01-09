@@ -4,6 +4,7 @@
   "latex-workshop.latex.outDir": "out",
   "latex-workshop.latex.autoBuild.run":"onFileChange",
   "latex-workshop.latex.autoClean.run": "onBuilt",
+  "latex-workshop.latexindent.path": "/usr/local/bin/latexindent",
   "latex-workshop.latex.clean.fileTypes": [
     "*.aux","*.bbl","*.blg","*.dvi","*.fdb_latexmk","*.fls","*.synctex.gz","*.toc"
   ],
