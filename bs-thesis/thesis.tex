@@ -125,8 +125,15 @@
 \chapter{RQ1：後方互換性の損失に伴うテストコード変更とは何か？}\label{rq1}
 
 \section{概要}
+本章では，テストコード変更内容を分類し，実際に後方互換性が損失する時どのようなテストコード変更が行われるかを明らかにする．テストコード変更内容を分類するために，まず，JavaScript言語におけるテストコードの構成要素を定義し，テストコード変更内容の細分化を行う．その後，目視によりバージョン間のテストコード変更内容を集計する．
 
-本章では，テストコード変更内容を分類し，実際に後方互換性が損失する時，どのようなテストコード変更が行われるかを明らかにする．
+\section{調査方法}
+\subsection{JavaScript言語におけるテストコード構成要素}
+本研究では，プログラムのテストの中でも単体テストのみを対象とする．単体テストでは，関数やクラスといったプログラムを構成する単位が開発者の想定通りに動作するかを検証する．単体テストでは，〜〜前置き．
+
+Program~\ref{testSample}は，JavaScriptで記述されたテストコードの例を示す．1行目で{\verb|sum|}関数をインポートしている．{\verb|sum|}関数は，2つの引数を受け取り，それらを足し合わせた結果を返す関数とする．3から10行目の{\verb|describe|}関数により，テストスイートとしてテストケースをまとめている．
+
+JavaScript言語では，テストコードを書く際にフレームワークを使用することが多いが，フレームワーク毎に記法は異なるものの構成要素は変わらない．
 
 \begin{figure}[t]
   \begin{lstlisting}[caption={[upper/lower text]%
@@ -137,27 +144,20 @@ const sum = require('./sum');
 
 describe('sum', function() {
   test('1+2=3', function() {
-    const actual = sum(1, 2);
-    const expected = 3;
-    expect(actual).toBe(expected);
+    expect(sum(1, 2)).toBe(3);
+  });
+  test('2-1=1', function() {
+    expect(sum(2, -1)).toBe(1);
   });
 });
 \end{lstlisting}
 \vspace{-6mm}
 \end{figure}
+\subsection{テストコード変更の細分化}
 
-\subsection{テストコード}
-テストコードは，既存のプログラムの動作を保証するために記述される．
-
-Program~\ref{testSample}は，JavaScriptで記述されたテストコードの例を示す．
-
-本論文では，3から9行目をテストスイート，4から8行目をテストケース，5行目の変数{\verb|actual|}の値を入力値，6行目の変数{\verb|expected|}の値を期待値，7行目をアサーションと呼ぶ．
-
-
-
-\section{調査方法}
 
 \section{調査結果}
+
 
 \section{考察}
 
@@ -181,6 +181,7 @@ Program~\ref{testSample}は，JavaScriptで記述されたテストコードの�
 \subsection{テストコードの定義}
 
 \subsection{変更パターンの作成}
+JavaScript言語では，テストコードを書く際にフレームワークを使うことが多い．本調査では，State of JavaScript 2022\footnote{\url{https://2022.stateofjs.com/}}で紹介されている主要なテストフレームワーク13件のうち，単体テストで使われるフレームワーク5件を考慮する．
 
 \subsection{変更パターンの検出}
 
