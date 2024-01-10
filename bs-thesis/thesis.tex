@@ -129,7 +129,7 @@
 
 \section{調査方法}
 \subsection{JavaScript言語におけるテストコード構成要素}
-本研究では，プログラムのテストの中でも単体テストを対象とする．単体テストでは，関数やクラスといったプログラムを構成する単位(ユニット)が開発者の想定通りに動作するかを検証する．単体テストを実施する際は，テスト対象ユニットに対応するテストスイートを用意することが多い．テストスイートとは，テストの目的や条件が似ているテストケースの集合を指す．テストケースとは，テスト項目の最小単位であり，テスト対象への入力と想定される結果(期待値)の組み合わせで構成される．入力値と期待値を受け取ってプログラムが正しく動作しているか検証する仕組みをアサーションと呼ぶ．
+本研究では，プログラムのテストの中でも単体テストを対象とする．単体テストとは，関数やクラスといったプログラムを構成する単位(ユニット)が開発者の想定通りに動作するかを検証するテスト手法である．単体テストを実施する際は，テスト対象ユニットに対応するテストスイートを用意することが多い．テストスイートとは，テストの目的や条件が似ているテストケースの集合を指す．テストケースとは，テスト項目の最小単位であり，テスト対象への入力と想定される結果(期待値)の組み合わせで構成される．入力値と期待値を受け取ってプログラムが正しく動作しているか検証する仕組みをアサーションと呼ぶ．
 
 JavaScriptにおけるテストコードの例をProgram~\ref{isOdd.js}，Program~\ref{isOdd.test.js}を用いて説明する．Program~\ref{isOdd.js}は，この例においてテスト対象となる関数{\verb|isOdd()|}が定義されている．{\verb|isOdd()|}は，入力された値が奇数かどうかを真偽値で返す関数である．Program~\ref{isOdd.test.js}は，関数{\verb|isOdd()|}を単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述されている．JavaScript言語では，テストコードを書く際にフレームワークを使用することが多いが，フレームワーク毎に記法は異なるものの構成要素は変わらない．
 
@@ -138,9 +138,9 @@ Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストス
 
 \begin{figure}[t]
   \begin{lstlisting}[caption={[upper/lower text]%
-             \begin{tabular}[t]{@{}l@{}}
-              isOdd.js \\[1.0\normalbaselineskip]
-             \end{tabular}},frame={tb},numbers=left,label=isOdd.js,identifierstyle={\small}]
+    \begin{tabular}[t]{@{}l@{}}
+      isOdd.js \\[1.0\normalbaselineskip]
+    \end{tabular}}, frame={tb}, numbers=left, label=isOdd.js, identifierstyle={\small}]
 export function isOdd(number) {
   let result = false;
   if (number % 2 === 1) {
@@ -148,16 +148,17 @@ export function isOdd(number) {
   }
   return result;
 }
-\end{lstlisting}
+  \end{lstlisting}
   \vspace{-6mm}
 \end{figure}
 
+
 \begin{figure}[t]
   \begin{lstlisting}[caption={[upper/lower text]%
-             \begin{tabular}[t]{@{}l@{}}
-              test/sum.test.js \\[1.0\normalbaselineskip]
-             \end{tabular}},frame={tb},numbers=left,label=isOdd.test.js,identifierstyle={\small}]
-import { isOdd } from './isOdd'
+    \begin{tabular}[t]{@{}l@{}}
+      isOdd.test.js \\[1.0\normalbaselineskip]
+    \end{tabular}}, frame={tb}, numbers=left, label=isOdd.test.js, identifierstyle={\small}]
+import { isOdd } from './isOdd';
 
 describe('Testing the isOdd function', function() {
   test('should return true, if the number is odd', function() {
@@ -167,19 +168,20 @@ describe('Testing the isOdd function', function() {
     expect(isOdd(2)).toBe(false);
   });
 });
-\end{lstlisting}
+  \end{lstlisting}
   \vspace{-6mm}
 \end{figure}
+
 
 以上を踏まえ，本論文では，テストの構成要素として6つの要素を考慮する．
 \begin{itemize}
   \setlength{\itemsep}{0cm}
-  \item テストスイート
-  \item テストケース
-  \item テストスイート・テストケースのラベル
-  \item アサーション
-  \item 入力値
-  \item 期待値
+  \item テストスイート(3から0行目)
+  \item テストケース(4から6行目，7から9行目)
+  \item テストスイート・テストケースのラベル(3，4，7行目)
+  \item アサーション(5，8行目)
+  \item 入力値（5，8行目{\verb|expect|}節の引数）
+  \item 期待値(5，8行目{\verb|toBe|}節の引数)
 \end{itemize}
 
 \subsection{テストコード変更内容の細分化}
@@ -188,10 +190,11 @@ describe('Testing the isOdd function', function() {
 
 
 
-
-
+\section{データセット}
+データセットとして，従来研究\cite{matsuda}で収集されたライブラリバージョン群を使用する．従来研究では，人気でテストを継続的に管理しているライブラリを対象とするため，ライブラリの人気度を示すnpmスコア~\footnote{\url{https://npms.io}}が上位500件以内で，各バージョンのコミットにおけるテスト実行時の成功率が100％であることを条件にnpm\footnote{\url{https://www.npmjs.com/}}から2,111件のライブラリバージョンを収集した．本調査では，このデータセットから，ライブラリテストに変更があるライブラリバージョン1,027件を抽出し，95％の信頼区間でサンプリングした280件を対象とする．
 
 \section{調査結果}
+
 
 
 \section{考察}
