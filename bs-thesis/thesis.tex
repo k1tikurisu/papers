@@ -139,7 +139,7 @@
 
 JavaScriptにおけるテストコードの例をProgram~\ref{isOdd.js}，Program~\ref{isOdd.test.js}を用いて説明する．Program~\ref{isOdd.js}は，この例においてテスト対象となる関数{\verb|isOdd()|}が定義されている．{\verb|isOdd()|}は，入力された値が奇数かどうかを真偽値で返す関数である．Program~\ref{isOdd.test.js}は，関数{\verb|isOdd()|}を単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述されている．JavaScript言語では，テストコードを書く際にフレームワークを使用することが多いが，フレームワーク毎に記法は異なるものの構成要素は変わらない．
 
-Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により2つのテストケースが定義されている．テストスイートやテストケースは，そのテストスイート・ケースで何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．1つ目のテストケースでは，5行目のアサーションにより，関数{\verb|isOdd()|}に対し正の奇数を入力したときの動作を検証している．この場合，想定結果は{\verb|true|}となるため，{\verb|toBe|}節で結果が{\verb|true|}となることを主張する．
+Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により2つのテストケースが定義されている．テストスイートをネストさせることも可能である．テストスイートやテストケースは，そのテストスイート・ケースで何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．1つ目のテストケースでは，5行目のアサーションにより，関数{\verb|isOdd()|}に対し正の奇数を入力したときの動作を検証している．この場合，想定結果は{\verb|true|}となるため，{\verb|toBe|}節で結果が{\verb|true|}となることを主張する．
 同様に，2つ目のテストケースでは，関数{\verb|isOdd()|}に対し正の偶数を入力したときの動作を検証しており，想定結果は{\verb|false|}となるため{\verb|toBe|}節で結果が{\verb|false|}となることを主張している．
 
 \begin{figure}[t]
@@ -199,6 +199,7 @@ describe('Testing the isOdd function', function() {
   \item アサーションの削除
   \item アサーションの入力値の変更
   \item アサーションの期待値の変更
+  \item 前提条件の変更
   \item リファクタリング
 \end{itemize}
 
@@ -214,26 +215,56 @@ describe('Testing the isOdd function', function() {
 \begin{figure}[t]
   \label{fig:test_pattern}
   \centering
-  \includegraphics[width=1.0\linewidth]{Maekawa_fig/barh-test-pattern.pdf}
+  \includegraphics[width=1.0\linewidth]{fig/barh-test-pattern.pdf}
   \caption{テスト変更内容ごとの実際の後方互換性}
 \end{figure}
 
-図\ref{fig:test_pattern}は，テスト変更内容ごとの後方互換性の有無を横棒積み上げ棒グラフで示す．
-
-
-ライブラリのテストが削除された場合，従来研究の仮説と同様に後方互換性を損失していた割合が高い．
-%く，後方互換性の損失に関係するテスト変更であると示唆される．
-一方で，リファクタリングは件数も多くほとんどが実際には後方互換性を保っているため，従来研究の手法では誤検出となる．その他，テスト変更内容とライブラリの変更内容には次のような関係があることがわかった．
-
-\begin{itemize}
-  \item 機能拡張によって後方互換性を損失している場合，テスト追加していることが多い
-  \item 機能削除によって後方互換性を損失している場合，テスト削除していることが多い
-  \item APIの仕様変更によって後方互換性を損失している場合，アサーションの期待値を変更していることが多い
-\end{itemize}
-
-
+図\ref{fig:test_pattern}は，テスト変更内容ごとの後方互換性の有無を横棒積み上げ棒グラフで示す．テストスイートの削除，テストケースの削除は，後方互換性なしの割合が後方互換性ありの割合を上回っており，テストスイート，テストケースの削除は後方互換性の損失と関係のあるテスト変更と言える．一方で，リファクタリングによるテストコード変更は件数も多くほとんどが実際に後方互換性を保っているため，従来研究の手法で誤検出となる大きな原因であるとわかる．
 
 \section{考察}
+各テスト変更内容と実際の後方互換性との関係を目視により確認し例を挙げながら考察する．
+
+図\ref{fig:test_pattern}より，テストスイートの追加，テストケースの追加は，後方互換性を損失する割合に差がない．同様に，テストスイートの削除，テストケースの削除も後方互換性を損失する割合に差がないことがわかる．これは，JavaScript言語の単体テストフレームワークは，テストスイート中にテストスイートを宣言することが可能で，テストケースの宣言との使い分けはプロジェクトに委ねられており，明確な役割の違いがないことが挙げられる．よって，以降はテストスイートとテストケースを同等のものとして扱う．
+
+\subsection{テスト追加と後方互換性の損失の関係}
+
+\begin{figure}[t]
+  \label{fig:rq1.insert-test}
+  \centering
+  \includegraphics[width=1.0\linewidth]{fig/rq1/set-map/map.pdf}
+  \includegraphics[width=1.0\linewidth]{fig/rq1/set-map/map.test.pdf}
+  \caption{serialize-javascriptのバージョン1.6.1から1.7.0への変更}
+\end{figure}
+
+テストスイートの追加とテストケースの追加は，実際に後方互換性を保つ割合の方が高い．ただし，後方互換性の損失に伴ってテストが追加される例も存在するとわかる．後方互換性の損失に伴ってテストが追加される例として，JavaScriptオブジェクトを文字列に変換する関数を提供するライブラリserialize-javascriptのバージョン1.6.1から1.7.0への変更\footnote{\url{https://github.com/yahoo/serialize- javascript/compare/v1.6.1...v1.7.0}}を図\ref{fig:rq1.insert-test}で示す．
+
+図\ref{fig:rq1.insert-test}の上部がソースコード，下部がテストコード変更内容である．
+
+\todo{変更内容の説明}
+
+例より，機能拡張によって後方互換性を損失している場合，同時にテスト追加される場合があるとわかる．よって，機能拡張に伴うテスト追加を検出することで後方互換性の損失を捉えられると考えられる．
+
+\subsection{テスト削除と後方互換性の損失の関係}
+
+\begin{figure}[t]
+  \label{fig:rq1.delete-test}
+  \centering
+  \includegraphics[width=1.0\linewidth]{fig/rq1/uuid/randomByte.pdf}
+  \includegraphics[width=1.0\linewidth]{fig/rq1/uuid/randomByte.test.pdf}
+  \caption{uid-safeのバージョン2.0.0から2.1.0への変更}
+\end{figure}
+
+テストスイートの削除とテストケースの削除は，実際に後方互換性を損失する割合の方が高い．ただし，テストが削除されていても後方互換性の損失が検出されない場合も存在するとわかる．テストが削除されているが後方互換性の損失が検出されない例として，暗号化されたUIDを生成する関数を提供するライブラリuid-safeのバージョン2.0.0から2.1.0への変更を\footnote{\url{https://github.com/crypto-utils/uid-safe/compare/2.0.0...2.1.0}}を図\ref{fig:rq1.delete-test}で示す．
+
+図\ref{fig:rq1.delete-test}の上部がソースコード，下部がテストコード変更内容である．
+
+\todo{例と結論}
+
+
+\subsection{テスト変更と後方互換性の損失の関係}
+
+
+
 
 \chapter{RQ2：テストコード変更内容に基づく後方互換性の判定手法の有効性はどの程度か}
 
@@ -273,19 +304,19 @@ JavaScript言語では，テストコードを書く際にフレームワーク�
 
 \chapter*{謝辞}
 
-文献を参照する場合には，論文の最後に参考文献として列挙するとともに，
-\verb|\cite|を使って，例えば，
-\begin{quote}
-  文献\cite{1390850475731067264}によれば…
-\end{quote}
-や，
-\begin{quote}
-  …である\cite{latex2e}．
-\end{quote}
-のように参照する．
+% 文献を参照する場合には，論文の最後に参考文献として列挙するとともに，
+% \verb|\cite|を使って，例えば，
+% \begin{quote}
+%   文献\cite{1390850475731067264}によれば…
+% \end{quote}
+% や，
+% \begin{quote}
+%   …である\cite{latex2e}．
+% \end{quote}
+% のように参照する．
 
-文献の列挙には，{\tt thebibliography}環境などを用いる\footnote{使い方
-  は，この資料のソースを参照．}．
+% 文献の列挙には，{\tt thebibliography}環境などを用いる\footnote{使い方
+%   は，この資料のソースを参照．}．
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -303,7 +334,7 @@ JavaScript言語では，テストコードを書く際にフレームワーク�
 %%
 
 \bibliographystyle{junsrt}
-\bibliography{thesis}
+\bibliography{thisis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

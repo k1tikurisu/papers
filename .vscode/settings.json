@@ -1,4 +1,15 @@
 {
+  "[tex]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.tabSize": 2
+  },
+  "[latex]": {
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.tabSize": 2
+  },
+  "[bibtex]": {
+    "editor.tabSize": 2
+  },
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.intellisense.package.enabled": true,
   "latex-workshop.latex.outDir": "out",
@@ -12,14 +23,14 @@
     {
       "name": "latexmk",
       "tools": ["latexmk"]
-    },
+    }
   ],
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
       "command": "latexmk",
       "args": ["-outdir=%OUTDIR%","%DOC%.tex"]
-    },
+    }
   ],
   "cSpell.ignorePaths": [
     ".latexmkrc",
