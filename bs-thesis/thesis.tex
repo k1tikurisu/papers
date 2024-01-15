@@ -3,7 +3,8 @@
 \usepackage{indentfirst}
 \usepackage{url}	% \url{}コマンド用．URLを表示する際に便利
 \usepackage{graphicx}  % ←graphicx.styを用いてEPSを取り込む場合有効にする
-\usepackage{listings}
+\usepackage{listings,jvlisting} %日本語のコメントアウトをする場合jvlisting（もしくはjlisting）が必要
+
 \usepackage{multirow}
 
 \usepackage{color}
@@ -11,6 +12,47 @@
 \renewcommand{\lstlistingname}{Program}
 \newcommand{\todo}[1]{\colorbox{yellow}{{\bf TODO}:}{\color{red} {\textbf{[#1]}}}}
 			% 他のパッケージ・スタイルを使う場合には適宜追加
+
+%ここからソースコードの表示に関する設定
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle={\small\ttfamily},
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=3zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex
+}
+%ここまでソースコードの表示に関する設定
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -122,31 +164,18 @@
 
 \section{キーアイデア}
 
-\chapter{RQ1：後方互換性の損失に伴うテストコード変更とは何か？}\label{rq1}
+\chapter{RQ1：後方互換性の損失を伴わないテストコード変更とは何か？}\label{rq1}
 
 \section{概要}
-本章では，実際に後方互換性が損失した時，どのようなテスト変更が行われているか分析する．具体的には，テストコード変更内容を定義し，各ライブラリバージョンに対して，実際の後方互換性の判定と，テストコード変更内容を集計する．各バージョンのテストコードの変更内容はテストコードの変更差分から目視により分類する．実際の後方互換性の判定はMujahidらの手法を使用する．
-
-% 後方互換性が損失しているかの判断基準は，従来研究のものを採用する．
-
-% 本章では，テストコード変更内容を分類し，実際に後方互換性が損失する時どのようなテストコード変更が行われるかを明らかにする．テストコード変更内容を分類するために，まず，JavaScript言語におけるテストコードの構成要素を定義し，テストコード変更内容の細分化を行う．その後，目視によりバージョン間のテストコード変更内容を集計する．
+本章では，従来研究で誤検出となる，後方互換性の損失を伴わないテストコード変更が存在するか分析する．具体的には，各ライブラリバージョンに対して，後方互換性の有無の判定と，テストコード変更内容を集計する．各バージョンのテストコードの変更内容は，テストコードの変更差分から目視により分類する．後方互換性の有無の判定はMujahidらの提案手法を使用する．
 
 \section{分析手法}
-本分析では，各ライブラリ更新ごとに実際の後方互換性の判定と，テストコード変更内容を目視により集計する．
+本分析では，各ライブラリ更新ごとに後方互換性の判定と，テストコード変更内容を目視により集計する．
 
 \subsection{テストコード変更内容の目視分類}
-テストコード変更内容を定義するにあたり，テストコードの構成要素をまとめる．本研究では，プログラムのテストの中でも単体テストを対象とする．単体テストとは，関数やクラスといったプログラムを構成する単位(ユニット)が開発者の想定通りに動作するかを検証するテスト手法である．単体テストを実施する際は，テスト対象ユニットに対応するテストスイートを用意することが多い．テストスイートとは，テストの目的や条件が似ているテストケースの集合を指す．テストケースとは，テスト項目の最小単位であり，テスト対象への入力と想定される結果(期待値)の組み合わせで構成される．入力値と期待値を受け取ってプログラムが正しく動作しているか検証する仕組みをアサーションと呼ぶ．
+テストコード変更内容を目視分類するために，テストコードの構成要素をまとめる．本研究では，プログラムのテストの中でも単体テストを対象とする．単体テストとは，関数やクラスなどのプログラムを構成する単位(ユニット)が開発者の期待通りに動作するかを検証するテスト手法である．単体テストを実施する際は，テスト対象ユニットに対応するテストスイートを用意する必要がある．テストスイートとは，テストの目的や条件が似ているテストケースの集合を指す．テストケースは，テスト項目の最小単位であり，テスト対象への入力と期待される結果(期待値)の組み合わせで構成する．入力値と期待値を受け取ってプログラムが正しく動作しているか検証する仕組みをアサーションと呼ぶ．
 
-JavaScriptにおけるテストコードの例をProgram~\ref{isOdd.js}，Program~\ref{isOdd.test.js}を用いて説明する．Program~\ref{isOdd.js}は，この例においてテスト対象となる関数{\verb|isOdd()|}が定義されている．{\verb|isOdd()|}は，入力された値が奇数かどうかを真偽値で返す関数である．Program~\ref{isOdd.test.js}は，関数{\verb|isOdd()|}を単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述されている．JavaScript言語では，テストコードを書く際にフレームワークを使用することが多いが，フレームワーク毎に記法は異なるものの構成要素は変わらない．
-
-Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により2つのテストケースが定義されている．テストスイートやテストケースは，何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．1つ目のテストケースでは，5行目のアサーションにより，関数{\verb|isOdd()|}に対し正の奇数を入力したときの動作を検証している．この場合，想定結果は{\verb|true|}となるため，{\verb|toBe|}節で結果が{\verb|true|}となることを主張する．
-同様に，2つ目のテストケースでは，関数{\verb|isOdd()|}に対し正の偶数を入力したときの動作を検証しており，想定結果は{\verb|false|}となるため{\verb|toBe|}節で結果が{\verb|false|}となることを主張している．
-
-\begin{figure}[t]
-  \begin{lstlisting}[caption={[upper/lower text]%
-    \begin{tabular}[t]{@{}l@{}}
-      isOdd.js \\[1.0\normalbaselineskip]
-    \end{tabular}}, frame={tb}, numbers=left, label=isOdd.js, identifierstyle={\small}]
+\begin{lstlisting}[caption=isOdd.js, label=isOdd.js]
 export function isOdd(number) {
   let result = false;
   if (number % 2 === 1) {
@@ -154,16 +183,9 @@ export function isOdd(number) {
   }
   return result;
 }
-  \end{lstlisting}
-  \vspace{-6mm}
-\end{figure}
+\end{lstlisting}
 
-
-\begin{figure}[t]
-  \begin{lstlisting}[caption={[upper/lower text]%
-    \begin{tabular}[t]{@{}l@{}}
-      isOdd.test.js \\[1.0\normalbaselineskip]
-    \end{tabular}}, frame={tb}, numbers=left, label=isOdd.test.js, identifierstyle={\small}]
+\begin{lstlisting}[caption=isOdd.test.js, label=isOdd.test.js]
 import { isOdd } from './isOdd';
 
 describe('Testing the isOdd function', function() {
@@ -174,21 +196,14 @@ describe('Testing the isOdd function', function() {
     expect(isOdd(2)).toBe(false);
   });
 });
-  \end{lstlisting}
-  \vspace{-6mm}
-\end{figure}
+\end{lstlisting}
 
-% \begin{itemize}
-%   \setlength{\itemsep}{0cm}
-%   \item テストスイート(3から0行目)
-%   \item テストケース(4から6行目，7から9行目)
-%   \item テストスイート・テストケースのラベル(3，4，7行目)
-%   \item アサーション(5，8行目)
-%   \item 入力値（5，8行目{\verb|expect|}節の引数）
-%   \item 期待値(5，8行目{\verb|toBe|}節の引数)
-% \end{itemize}
+Program~\ref{isOdd.js}，Program~\ref{isOdd.test.js}は，JavaScriptにおけるテストコードの例を示す．Program~\ref{isOdd.js}は，テスト対象となる関数{\verb|isOdd()|}が定義されている．{\verb|isOdd()|}は，入力された値が奇数か否か
+を真偽値で返す関数である．Program~\ref{isOdd.test.js}は，関数{\verb|isOdd()|}を単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述している．
 
-また，テストデータの初期化や外部リソースの準備などは，セットアップ関数に記載したり，テストケース内に書くことができる．これらはテストケースの前提条件として扱う．また，その他の変更として，テストスイート・テストケースのラベルの変更，テストフレームワークの変更，可読性向上のためのフォーマッティングなどが挙げられるが，これらはテストコードの振る舞いに関わらない変更のためリファクタリングとして扱う．以上を踏まえ，本論文では，テストコードの変更内容として10件の内容を考慮する．
+Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により2つのテストケーを定義している．テストスイートやテストケースは，何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．1つ目のテストケース(4行目から6行目)では，5行目のアサーションにより，関数{\verb|isOdd()|}に対し3を入力したときの動作を検証している．この場合，期待する結果は{\verb|true|}であるため，{\verb|toBe|}節で結果が{\verb|true|}となる．
+同様に，2つ目のテストケース(7行目から9行目)では，関数{\verb|isOdd()|}に対し2を入力したときの動作を検証しており，期待する結果は{\verb|false|}であるため{\verb|toBe|}節で結果が{\verb|false|}となる．\todo{テストケースの前提条件の説明}．
+以上を踏まえ，本論文では，テストコードの変更内容として10件の内容を考慮する．
 
 \begin{itemize}
   \setlength{\itemsep}{0cm}
@@ -200,15 +215,17 @@ describe('Testing the isOdd function', function() {
   \item アサーションの削除
   \item アサーションの入力値の変更
   \item アサーションの期待値の変更
-  \item テストケースの前提条件の変更
+  \item テストケースの前提条件の変更 \todo{追加・削除・変更に仕分け}
   \item リファクタリング
 \end{itemize}
 
-\subsection{実際の後方互換性の判定}\label{zissainokouhougokanseinohantei}
-実際の後方互換性の判定には，Mujahidらの手法を使用する．Mujahidらは，ライブラリの後方互換性の損失をクライアントテストを実行することで検出する手法を提案した\cite{mujahid}.後方互換性を損失する変更を加えられたライブラリバージョンでは，その影響を受けるクライアントテストの結果が更新前後で成功から失敗に変化することを手法の根拠としている．本分析でも，後方互換性の判定のためにクライアントテストを実行する．
+リファクタリングは，テストスイート・テストケースのラベルの変更，テストフレームワークの変更，可読性向上のためのフォーマッティングなどテストコードの振る舞いに関わらない変更を含む．
+
+\subsection{後方互換性の判定}\label{kouhougokanseinohantei}
+後方互換性の判定には，Mujahidらの手法を使用する．Mujahidらは，ライブラリの後方互換性の損失をクライアントテストを実行することで検出する手法を提案した\cite{mujahid}.後方互換性を損失する変更を加えられたライブラリバージョンでは，その影響を受けるクライアントテストの結果が更新前後で成功から失敗に変化することを手法の根拠としている．本分析でも，\todo{クライアントテストの使い方を詳しく説明する: 後方互換性の判定のためにクライアントテストを実行する．}
 
 \section{データセット}
-データセットとして，従来研究\cite{matsuda}で収集されたライブラリバージョン群を使用する．従来研究では，人気でテストを継続的に管理しているライブラリを対象とするため，ライブラリの人気度を示すnpmスコア~\footnote{\url{https://npms.io}}が上位500件以内で，各バージョンのコミットにおけるテスト実行時の成功率が100％であることを条件にnpm\footnote{\url{https://www.npmjs.com/}}から2,111件のライブラリバージョンを収集した．本調査では，このデータセットから，ライブラリテストに変更があるライブラリバージョン1,027件を抽出し，95％の信頼区間でサンプリングした280件を対象とする．
+データセットとして，従来研究\cite{matsuda}で収集されたライブラリバージョン群を使用する．従来研究では，ライブラリの人気度を示すnpmスコア~\footnote{\url{https://npms.io}}が上位500件以内で，各バージョンのコミットにおけるテスト実行時の成功率が100％であることを条件にnpm\footnote{\url{https://www.npmjs.com/}}から2,111件のライブラリバージョンを収集した．本調査では，このデータセットから，ライブラリテストに変更があるライブラリバージョン1,027件を抽出し，95％の信頼区間でサンプリングした280件を対象とする．
 
 \section{分析結果}
 \begin{figure}[t]
@@ -253,7 +270,7 @@ describe('Testing the isOdd function', function() {
 
 テストスイートの削除とテストケースの削除は，実際に後方互換性を損失する割合の方が高いため，テスト削除は後方互換性の損失に関係するテスト変更と言える．ただし，テストが削除されていても後方互換性の損失が検出されない場合も存在する．テストが削除されているが後方互換性の損失が検出されない例として，暗号化されたUIDを生成する関数を提供するライブラリuid-safeのバージョン2.0.0から2.1.0への変更を\footnote{\url{https://github.com/crypto-utils/uid-safe/compare/2.0.0...2.1.0}}を図\ref{fig:rq1.delete-test}で示す．図\ref{fig:rq1.delete-test}の上部がソースコード，下部がテストコード変更内容である．
 
-この変更では，セキュリティ上の問題から，ランダムなバイト列を生成する{\verb|randomBytes|}関数を削除し，同時に{\verb|randomBytes|}の動作を検証するテストスイートを削除している．また，同バージョンで{\verb|randomBytes|}と同等のランダムなバイト列を生成するモジュールを加え，置き換えている．置き換え前後でライブラリの振る舞いが全く同じ場合，後方互換性が保たれる．また，本研究では，\ref{zissainokouhougokanseinohantei}章で述べた通り，実際の後方互換性の判定にクライアントテストを利用している．このようなモジュールに置き換える例では，振る舞いの変化が限定的になるため，クライアントテストが捉えられず後方互換性ありと誤判定されたことが考えられる．誤判定を防ぐには実際に影響を受けるクライアントの特定が必要になるが本研究では今後の課題とする．
+この変更では，セキュリティ上の問題から，ランダムなバイト列を生成する{\verb|randomBytes|}関数を削除し，同時に{\verb|randomBytes|}の動作を検証するテストスイートを削除している．また，同バージョンで{\verb|randomBytes|}と同等のランダムなバイト列を生成するモジュールを加え，置き換えている．置き換え前後でライブラリの振る舞いが全く同じ場合，後方互換性が保たれる．また，本研究では，\ref{kouhougokanseinohantei}章で述べた通り，実際の後方互換性の判定にクライアントテストを利用している．このようなモジュールに置き換える例では，振る舞いの変化が限定的になるため，クライアントテストが捉えられず後方互換性ありと誤判定されたことが考えられる．誤判定を防ぐには実際に影響を受けるクライアントの特定が必要になるが本研究では今後の課題とする．
 
 \subsection{アサーションの入力値,期待値の変更と後方互換性の損失の関係}
 
@@ -279,7 +296,7 @@ describe('Testing the isOdd function', function() {
 \chapter{RQ2：テストコード変更内容に基づく後方互換性の判定手法の有効性はどの程度か}
 
 \section{概要}
-本章では，\ref{rq1}章で述べた，後方互換性の損失に関係するテストコード変更を自動検出するツールを開発し，後方互換性の損失の検出精度を検証する．まず，抽象構文木を用いてテストコードを定義し，
+本章では，\ref{rq1}章で述べた，後方互換性の損失に伴うテストコード変更内容を自動検出するツールを開発し，後方互換性の損失の検出精度を検証する．まず，抽象構文木を用いてテストコードを定義し，
 
 
 % \subsubsection{テストコード内容の定義}
