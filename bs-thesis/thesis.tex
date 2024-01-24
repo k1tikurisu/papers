@@ -175,34 +175,37 @@
 \subsection{テストコード変更内容の目視分類}
 テストコード変更内容を目視分類するために，テストコードの構成要素をまとめる．本研究では，プログラムのテストの中でも単体テストを対象とする．単体テストとは，関数やクラスなどのプログラムを構成する単位(ユニット)が開発者の期待通りに動作するかを検証するテスト手法である．単体テストを実施する際は，テスト対象ユニットに対応するテストスイートを用意する必要がある．テストスイートとは，テストの目的や条件が似ているテストケースの集合を指す．テストケースは，テスト項目の最小単位であり，テスト対象への入力と期待される結果(期待値)の組み合わせで構成する．入力値と期待値を受け取ってプログラムが正しく動作しているか検証する仕組みをアサーションと呼ぶ．
 
-\begin{lstlisting}[caption=isOdd.js, label=isOdd.js]
-export function isOdd(number) {
-  let result = false;
-  if (number % 2 === 1) {
-    result = true;
+\begin{lstlisting}[caption=Calculator.js, label=Calculator.js]
+class Calculator {
+  add(a, b) {
+    return a + b;
   }
-  return result;
 }
 \end{lstlisting}
 
-\begin{lstlisting}[caption=isOdd.test.js, label=isOdd.test.js]
-import { isOdd } from './isOdd';
+\begin{lstlisting}[caption=Calculator.test.js, label=Calculator.test.js]
+import { Calculator } from './Calculator';
 
-describe('Testing the isOdd function', function() {
-  test('should return true, if the number is odd', function() {
-    expect(isOdd(3)).toBe(true);
+describe('Calculator', () => {
+  let calculator;
+
+  beforeEach(() => {
+    calculator = new Calculator();
   });
-  test('should return false, if the number is even', function() {
-    expect(isOdd(2)).toBe(false);
+
+  test('should add two positive numbers', () => {
+    if (calculator) {
+      expect(calculator.add(1, 1)).toBe(2);
+    }
   });
 });
 \end{lstlisting}
 
-Program~\ref{isOdd.js}，Program~\ref{isOdd.test.js}は，JavaScriptにおけるテストコードの例を示す．Program~\ref{isOdd.js}は，テスト対象となる関数{\verb|isOdd()|}が定義されている．{\verb|isOdd()|}は，入力された値が奇数か否か
-を真偽値で返す関数である．Program~\ref{isOdd.test.js}は，関数{\verb|isOdd()|}を単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述している．
 
-Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により2つのテストケーを定義している．テストスイートやテストケースは，何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．1つ目のテストケース(4行目から6行目)では，5行目のアサーションにより，関数{\verb|isOdd()|}に対し3を入力したときの動作を検証している．この場合，期待する結果は{\verb|true|}であるため，{\verb|toBe|}節で結果が{\verb|true|}となる．
-同様に，2つ目のテストケース(7行目から9行目)では，関数{\verb|isOdd()|}に対し2を入力したときの動作を検証しており，期待する結果は{\verb|false|}であるため{\verb|toBe|}節で結果が{\verb|false|}となる．\todo{テストケースの前提条件の説明}．
+Program~\ref{Calculator.js}，Program~\ref{Calculator.test.js}は，JavaScriptにおけるテストコードの例を示す．Program~\ref{Calculator.js}は，テスト対象となるクラス{\verb|Calculator|}が定義されている．このクラスに含まれるメソッド{\verb|add()|}は，2つの引数を受け取り足し合わせた値を返す関数である．Program~\ref{Calculator.test.js}は,{\verb|Calculator|}クラスを単体テストによって検証するファイルで，JavaScript向けテストフレームワークJest\footnote{\url{https://jestjs.io/}}を使用して記述している．
+
+Program~\ref{Calculator.test.js}に含まれる{\verb|describe|}関数でテストスイートを宣言し，{\verb|test|}関数により1つのテストケースを定義している．テストスイートやテストケースは，何を検証するかが記述されるラベルと，検証するテスト用関数を引数に取る．6行目から7行目の{\verb|beforeEach|}関数で，テストフィクスチャと呼ばれる，テストデータの初期化などのテストの事前条件を定義できる．例では，{\verb|Calculator|}クラスをインスタンス化している．テストケース(10行目から12行目)では，11行目で{\verb|if|}文によりテストの前提条件を記述し，12行目のアサーションで{\verb|Calculator.add()|}に対し{\verb|1|}と{\verb|1|}を入力したときの動作を検証している．この場合，期待する結果は{\verb|2|}であるため，{\verb|toBe|}節で結果が{\verb|2|}となる．
+
 以上を踏まえ，本論文では，テストコードの変更内容として10件の内容を考慮する．
 
 \begin{itemize}
@@ -215,17 +218,18 @@ Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストス
   \item アサーションの削除
   \item アサーションの入力値の変更
   \item アサーションの期待値の変更
-  \item テストケースの前提条件の変更 \todo{追加・削除・変更に仕分け}
+  \item テストの前提条件の変更
+  \item テストフィクスチャの変更
   \item リファクタリング
 \end{itemize}
 
 リファクタリングは，テストスイート・テストケースのラベルの変更，テストフレームワークの変更，可読性向上のためのフォーマッティングなどテストコードの振る舞いに関わらない変更を含む．
 
 \subsection{後方互換性の判定}\label{kouhougokanseinohantei}
-後方互換性の判定には，Mujahidらの手法を使用する．Mujahidらは，ライブラリの後方互換性の損失をクライアントテストを実行することで検出する手法を提案した\cite{mujahid}.後方互換性を損失する変更を加えられたライブラリバージョンでは，その影響を受けるクライアントテストの結果が更新前後で成功から失敗に変化することを手法の根拠としている．本分析でも，\todo{クライアントテストの使い方を詳しく説明する: 後方互換性の判定のためにクライアントテストを実行する．}
+後方互換性の判定には，Mujahidらの手法を使用する．Mujahidらは，ライブラリの後方互換性の損失をクライアントテストを実行することで検出する手法を提案した\cite{mujahid}.後方互換性を損失する変更を加えられたライブラリバージョンでは，その影響を受けるクライアントテストの結果が更新前後で成功から失敗に変化することを手法の根拠としている．本分析でも，対象ライブラリのクライアントのデータを収集し，更新前後でクライアントテストを実行する．
 
 \section{データセット}
-データセットとして，従来研究\cite{matsuda}で収集されたライブラリバージョン群を使用する．従来研究では，ライブラリの人気度を示すnpmスコア~\footnote{\url{https://npms.io}}が上位500件以内で，各バージョンのコミットにおけるテスト実行時の成功率が100％であることを条件にnpm\footnote{\url{https://www.npmjs.com/}}から2,111件のライブラリバージョンを収集した．本調査では，このデータセットから，ライブラリテストに変更があるライブラリバージョン1,027件を抽出し，95％の信頼区間でサンプリングした280件を対象とする．
+データセットとして，従来研究\cite{matsuda}で収集されたライブラリバージョン群を使用する．従来研究では，ライブラリの人気度を示すnpmスコア~\footnote{\url{https://npms.io}}が上位500件以内で，各バージョンのコミットにおけるテスト実行時の成功率が100％であることを条件にnpm\footnote{\url{https://www.npmjs.com/}}から2,111件のライブラリバージョンを収集した．本調査では，このデータセットから，ライブラリテストに変更があるライブラリバージョン1,027件を抽出し，95％の信頼区間でサンプリングした280件を対象とする．分析対象とするライブラリのいずれかのバージョンに依存するクライアントは，Mujahidらのデータセットから抽出した．
 
 \section{分析結果}
 \begin{figure}[t]
@@ -235,9 +239,8 @@ Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストス
   \caption{テスト変更内容ごとの実際の後方互換性}
 \end{figure}
 
-図\ref{fig:test_pattern}は，テスト変更内容ごとの後方互換性の有無を横棒積み上げ棒グラフで示す．
-
-テストスイートの削除，テストケースの削除は，後方互換性なしの割合が後方互換性ありの割合を上回っており，後方互換性の損失と関係のあるテストコード変更と言える．また，アサーションの削除，前提条件の変更は後方互換性を100％保っており，後方互換性の損失に関係するテストコード変更とは言えない．また，リファクタリングは件数も多くほとんどが実際に後方互換性を保っているため，後方互換性の損失に関係するテスト変更とは言えず，従来研究の手法で誤検出となる大きな原因であるとわかる．
+\todo{以下TODO}
+図\ref{fig:test_pattern}は，テスト変更内容ごとの後方互換性の有無を横棒積み上げ棒グラフで示す．縦軸は各変更内容，横軸は発生件数である．リファクタリングは件数も多くほとんどが実際に後方互換性を保っているため，後方互換性の損失に関係するテスト変更とは言えず，従来研究の手法で誤検出となる大きな原因であるとわかる．テストスイートの削除，テストケースの削除は，後方互換性なしの割合が後方互換性ありの割合より高く，後方互換性の損失と関係のあるテストコード変更と言える．また，アサーションの削除，前提条件の変更は後方互換性を維持しており，後方互換性の損失に関係するテストコード変更とは言えない．
 
 \section{考察}
 各テスト変更内容と実際の後方互換性との関係を目視により確認し例を挙げながら考察する．
@@ -296,26 +299,87 @@ Program~\ref{isOdd.test.js}に含まれる{\verb|describe|}関数でテストス
 \chapter{RQ2：テストコード変更内容に基づく後方互換性の判定手法の有効性はどの程度か}
 
 \section{概要}
-本章では，\ref{rq1}章で述べた，後方互換性の損失に伴うテストコード変更内容を自動検出するツールを開発し，後方互換性の損失の検出精度を検証する．まず，抽象構文木を用いてテストコードを定義し，
-
-
-% \subsubsection{テストコード内容の定義}
-% JavaScriptの単体テストフレームワークとして使用される，JestやMochaの慣習に倣い，テストコード内容の定義を行う．
-
-% \noindent\textbf{テストコードの定義：}関数呼び出しで，関数名がdescribeまたはitまたはtestであり，第一引数が文字列，第二引数が関数呼び出しのものを，テストコードとする.
-
-% \noindent\textbf{アサーションの定義：}アサーションの記述形式はフレームワークにより異なるが，本分析では以下のように定義を行った．
-
-
+本章では，\ref{rq1}章で述べた，後方互換性の損失に伴うテストコード変更内容を自動検出するツールを開発し，後方互換性の損失の検出精度を検証する．まず，抽象構文木(AST)を用いてテストコード内容を定義し，後方互換性の損失に関係するテスト変更内容を3種類作成する．次に，GumTree\cite{gumtree}を用いた差分解析によりテストコードの変更情報を取得し，いずれかの変更内容が検出されれば後方互換性を損失したと判定する．
 
 \section{分析手法}
 
-\subsection{テストコードの定義}
+\subsection{各テストコード変更内容の定義}
+\ref{rq1}章で述べた，各テストコード変更内容を定義するために，JavaScript言語におけるテストコードの種類をまとめる．JavaScript言語では，テストコードを書く際にフレームワークを使うことが多く，フレームワーク毎にテストコードの書き方は異なる．本調査では，State of JavaScript 2022\footnote{\url{https://2022.stateofjs.com/}}で紹介されている主要なテストフレームワーク13件のうち，単体テストで使われるフレームワーク5件(Jest\footnote{\url{https://jestjs.io/}},Mocha\footnote{\url{https://mochajs.org/}},AVA\footnote{\url{https://github.com/avajs/ava}},Jasmine\footnote{\url{https://jasmine.github.io/}},Vitest\footnote{\url{https://vitest.dev/}})を考慮する．テストフレームワーク毎にテストスイート，テストケースの記述形式は大きく変わらないが，アサーションの書き方は異なる場合がある．テストフレームワーク毎のアサーションの書き方は，大きく振る舞い駆動の記述形式(BDD)と，テスト駆動の記述形式(TDD)の2つに大別できる．BDDの記述形式の例をProgram\ref{bdd.test.js}，TDDの記述形式の例をProgram\ref{tdd.test.js}で示す．
 
-\subsection{変更パターンの作成}
-JavaScript言語では，テストコードを書く際にフレームワークを使うことが多い．本調査では，State of JavaScript 2022\footnote{\url{https://2022.stateofjs.com/}}で紹介されている主要なテストフレームワーク13件のうち，単体テストで使われるフレームワーク5件を考慮する．
+\begin{lstlisting}[caption=BDDの記述形式, label=bdd.test.js]
+expect(calculator.add(1, 1)).to.be.a('number').equal(2);
+expect(calculator.add(1, 1), 'to be', 2);
+calculator.add(1, 1).should.be.a('number').equal(2);
+\end{lstlisting}
 
-\subsection{変更パターンの検出}
+BDDの記述形式は，Program\ref{bdd.test.js}のように，自然言語に似た構文を使用してテストを記述する．その中でも，1行目のように，{\verb|expect|}関数にメソッドチェーンで振る舞いを記述するもの，2行目のように{\verb|expect|}関数の引数にそのまま振る舞いを記述するもの，3行目のように入力に{\verb|should|}プロパティをはやして振る舞いを記述する形式がある．
+
+\begin{lstlisting}[caption=TDDの記述形式, label=tdd.test.js]
+assert.equal(calculator.add(1, 1), 2);
+t.is(calculator.add(1, 1), 2);  
+t.true(calculator.add(1, 1) === 2);
+\end{lstlisting}
+
+TDDの記述形式は，Program\ref{tdd.test.js}のように，Node.js\footnote{\url{https://nodejs.org/en}}標準の{\verb|assert|}文がメインのスタイルで，1行目のように
+
+
+\subsubsection{JavaScriptにおけるテストコードの種類}
+
+
+\subsubsection{テストコードの定義}
+
+\subsubsection{機能拡張に伴うテストコード追加}
+
+\subsubsection{機能削除に伴うテストコード削除}
+
+\subsubsection{APIの仕様変更に伴うテストコードのアサーション変更}
+
+
+抽象構文木（AST）は，ソースコードを構文解析して得られる木構造のデータである．
+
+松田研究では，it or testという関数名で，第一引数が文字列(テスト内容を示すラベル)，第二引数が関数呼び出しの場合，それをテストケースとしています．
+本研究では，テストスイートの追加・削除を含めるため，テストスイートを示すdescribeという関数名をキーに加え，describe or it or testという関数名をテストコードとして判定します．
+
+
+
+\section{データセット}
+
+\section{分析結果}
+
+\section{まとめ}
+
+\subsection{各テストコード変更内容の定義}
+\subsubsection{GumTreeによる差分検出}
+GumTree は入力として，変更前のソースファイルと変更後のソースファイルを受け取り，AST の
+ノード単位の編集スクリプトを出力する．編集スクリプトとは，変更後のソースコードを得るために変
+更前のソースコードに適用された編集操作の列である．GumTree は，削除・挿入・移動・更新の 4 つ
+の編集操作を検出可能である．操作の種類とそれが行われた AST のノードの情報を，編集スクリプト
+として出力する．
+GumTree は入力された変更前後のソースファイルから，それぞれの AST を生成し，この 2 つの
+AST の違いを編集スクリプトとして出力する．木構造の差分を計算するために，GumTree はマッチン
+グを行う．マッチングとは，変更前後における AST のノード間に対応付けを行う処理である．
+GumTree のマッチングは，トップダウンフェーズとボトムアップフェーズの 2 段階で構成されてい
+る．1 段階目のトップダウンフェーズでは，2 つの AST の根ノードから葉ノードに向けて辿っていき，
+完全一致する部分木をマッチングする．2 段階目のボトムアップフェーズでは，トップダウンフェーズ
+でマッチングされていないノードに対してマッチングを行う．トップダウンフェーズで対応付けられた
+ノードの親の部分木について類似度を計算し，閾値を超えていれば対応付けを行う．さらにその子孫に
+あたるノードに対し，RTED のアルゴリズム [18] を用いてさらにマッチングできるノードがないかを
+探索する．これを根に向かって繰り返し，ボトムアップフェーズが完了する．
+対応付けられたノードは，変更の前後で同じノードとして扱われる．マッチングの結果と AST を参
+照し，変更前の AST に対して，どのノードが削除・挿入されたか，どのノードの位置が変更されたか，
+どのノードの値が更新されたか，どのノードは変更が行われていないか，といった情報を得る．
+図 1 は，GumTree の差分検出方法を模式的に表している．変更前後のファイルから生成した AST
+にマッチングを行い，ノードの対応付けがされている．図 1 では，マッチングの結果を数字で表してい
+る．AST ノードの対応付けを基に，Chawathe ら [19] の変更前後の AST の木構造の違いを計算する
+手法を用いて，GumTree は差分を出力する．この例では，3 番のノードは変更前にしかないため削除，
+5 番のノードは変更後にしかないため挿入，と出力される．4 番のノードは変更前後のどちらにも存在
+しているが，親のノードが変わったため移動と出力される．1 番のノードは，更新と出力されている．
+更新は，変更の前後に同じノードが存在し，その値が変更された場合に出力される．
+
+
+\subsection{テストコード変更内容の検出}
+
+
 
 \section{分析結果}
 
