@@ -34,6 +34,26 @@
   doi       = {10.1109/ICSM.2012.6405296}
 }
 
+@article{impact-analysis-for-clients,
+  author     = {Venturini, Daniel and Cogo, Filipe Roseiro and Polato, Ivanilton and Gerosa, Marco A. and Wiese, Igor Scaliante},
+  title      = {I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages},
+  year       = {2023},
+  issue_date = {July 2023},
+  publisher  = {Association for Computing Machinery},
+  address    = {New York, NY, USA},
+  volume     = {32},
+  number     = {4},
+  issn       = {1049-331X},
+  url        = {https://doi.org/10.1145/3576037},
+  doi        = {10.1145/3576037},
+  abstract   = {Complex software systems have a network of dependencies. Developers often configure package managers (e.g., npm) to automatically update dependencies with each publication of new releases containing bug fixes and new features. When a dependency release introduces backward-incompatible changes, commonly known as breaking changes, dependent packages may not build anymore. This may indirectly impact downstream packages, but the impact of breaking changes and how dependent packages recover from these breaking changes remain unclear. To close this gap, we investigated the manifestation of breaking changes in the npm ecosystem, focusing on cases where packages’ builds are impacted by breaking changes from their dependencies. We measured the extent to which breaking changes affect dependent packages. Our analyses show that around 12\% of the dependent packages and 14\% of their releases were impacted by a breaking change during updates of non-major releases of their dependencies. We observed that, from all of the manifesting breaking changes, 44\% were introduced in both minor and patch releases, which in principle should be backward compatible. Clients recovered themselves from these breaking changes in half of the cases, most frequently by upgrading or downgrading the provider’s version without changing the versioning configuration in the package manager. We expect that these results help developers understand the potential impact of such changes and recover from them.},
+  journal    = {ACM Trans. Softw. Eng. Methodol.},
+  month      = {may},
+  articleno  = {94},
+  numpages   = {26},
+  keywords   = {Breaking changes, Semantic Version, npm, dependency management, change impact}
+}
+
 @article{matsuda,
   title   = {ライブラリのテストケース変更に基づく後方互換性の実証的分析},
   author  = {松田 和輝 and 伊原 彰紀 and 才木 一也},
