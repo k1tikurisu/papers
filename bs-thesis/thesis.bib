@@ -1,105 +1,90 @@
 @inproceedings{shared-software,
   author    = {Konstantopoulos, Dino and Marien, John and Pinkerton, Mike and Braude, Eric},
-  booktitle = {2009 33rd Annual IEEE International Computer Software and Applications Conference},
+  booktitle = {2009 33rd Annual IEEE International Computer Software and Applications Conference (COMPSAC{\textquotesingle}09)},
   title     = {Best Principles in the Design of Shared Software},
   year      = {2009},
   volume    = {2},
-  number    = {},
-  pages     = {287-292},
-  keywords  = {Software design;Binary codes;Open source software;Software libraries;Protection;Information technology;Licenses;Software packages;Packaging;Best practices;software frameworks;software libraries;software reuse;software sharing},
-  doi       = {10.1109/COMPSAC.2009.151}
+  pages     = {287-292}
 }
 
 @article{effect-on-developer,
-  author   = {Moser, S. and Nierstrasz, O.},
-  journal  = {Computer},
-  title    = {The effect of object-oriented frameworks on developer productivity},
-  year     = {1996},
-  volume   = {29},
-  number   = {9},
-  pages    = {45-51},
-  keywords = {Productivity;Samarium;Costs;Software systems;Gain measurement;Software metrics;Programming;Open systems;Object oriented modeling;Software measurement},
-  doi      = {10.1109/2.536783}
+  author  = {Moser, S. and Nierstrasz, O.},
+  journal = {Computer},
+  title   = {The effect of object-oriented frameworks on developer productivity},
+  year    = {1996},
+  volume  = {29},
+  number  = {9},
+  pages   = {45-51}
+}
+
+@inproceedings{library-analysis,
+  author    = {Raemaekers, Steven and van Deursen, Arie and Visser, Joost},
+  booktitle = {2012 28th IEEE International Conference on Software Maintenance (ICSM{\textquotesingle}12)},
+  title     = {Measuring software library stability through historical version analysis},
+  year      = {2012},
+  pages     = {378-387}
 }
 
 @article{java-api-diff-tool,
   author  = {Kamil Jezek and Jens Dietrich},
   title   = {API Evolution and Compatibility: A Data Corpus and Tool Evaluation},
-  journal = {Journal of Object Technology},
+  journal = {Journal of Object Technology (JOT{\textquotesingle}17)},
   volume  = {16},
   number  = {4},
-  issn    = {1660-1769},
   year    = {2017},
   month   = aug,
-  pages   = {2:1-23},
-  doi     = {10.5381/jot.2017.16.4.a2},
-  url     = {http://www.jot.fm/contents/issue_2017_04/article2.html}
+  pages   = {2:1-23}
 }
 
-@article{foo,
-  title   = {Efficient static checking of library updates},
-  author  = {Darius Foo and Hendy Chua and Jason Yeo and Ming Yi Ang and Asankhaya Sharma},
-  journal = {Proceedings of the 2018 26th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
-  year    = {2018},
-  url     = {https://api.semanticscholar.org/CorpusID:53079466}
-}
-
-@inproceedings{library-analysis,
-  author    = {Raemaekers, Steven and van Deursen, Arie and Visser, Joost},
-  booktitle = {2012 28th IEEE International Conference on Software Maintenance (ICSM)},
-  title     = {Measuring software library stability through historical version analysis},
-  year      = {2012},
-  volume    = {},
-  number    = {},
-  pages     = {378-387},
-  keywords  = {Libraries;Measurement;Java;Stability analysis;Security;Software;Conferences;Third-party Libraries;API Usage;API Stability;Software Reuse},
-  doi       = {10.1109/ICSM.2012.6405296}
+@article{matsuda,
+  title   = {ライブラリのテストケース変更に基づく後方互換性の実証的分析},
+  author  = {松田 和輝 and 伊原 彰紀 and 才木 一也},
+  journal = {ソフトウェア工学の基礎ワークショップ論文集},
+  volume  = {28},
+  pages   = {139-144},
+  year    = {2021}
 }
 
 @article{impact-analysis-for-clients,
-  author     = {Venturini, Daniel and Cogo, Filipe Roseiro and Polato, Ivanilton and Gerosa, Marco A. and Wiese, Igor Scaliante},
-  title      = {I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages},
-  year       = {2023},
-  issue_date = {July 2023},
-  publisher  = {Association for Computing Machinery},
-  address    = {New York, NY, USA},
-  volume     = {32},
-  number     = {4},
-  issn       = {1049-331X},
-  url        = {https://doi.org/10.1145/3576037},
-  doi        = {10.1145/3576037},
-  abstract   = {Complex software systems have a network of dependencies. Developers often configure package managers (e.g., npm) to automatically update dependencies with each publication of new releases containing bug fixes and new features. When a dependency release introduces backward-incompatible changes, commonly known as breaking changes, dependent packages may not build anymore. This may indirectly impact downstream packages, but the impact of breaking changes and how dependent packages recover from these breaking changes remain unclear. To close this gap, we investigated the manifestation of breaking changes in the npm ecosystem, focusing on cases where packages’ builds are impacted by breaking changes from their dependencies. We measured the extent to which breaking changes affect dependent packages. Our analyses show that around 12\% of the dependent packages and 14\% of their releases were impacted by a breaking change during updates of non-major releases of their dependencies. We observed that, from all of the manifesting breaking changes, 44\% were introduced in both minor and patch releases, which in principle should be backward compatible. Clients recovered themselves from these breaking changes in half of the cases, most frequently by upgrading or downgrading the provider’s version without changing the versioning configuration in the package manager. We expect that these results help developers understand the potential impact of such changes and recover from them.},
-  journal    = {ACM Trans. Softw. Eng. Methodol.},
-  month      = {may},
-  articleno  = {94},
-  numpages   = {26},
-  keywords   = {Breaking changes, Semantic Version, npm, dependency management, change impact}
+  title     = {I Depended on You and You Broke Me: An Empirical Study of Manifesting Breaking Changes in Client Packages},
+  volume    = {32},
+  number    = {4},
+  journal   = {ACM Transactions on Software Engineering and Methodology (TOSEM{\textquotesingle}23)},
+  publisher = {Association for Computing Machinery},
+  author    = {Venturini, Daniel and Cogo, Filipe Roseiro and Polato, Ivanilton and Gerosa, Marco A. and Wiese, Igor Scaliante},
+  year      = {2023},
+  month     = may,
+  pages     = {1–26}
+}
+
+
+@article{foo,
+  title    = {Efficient static checking of library updates},
+  author   = {Darius Foo and Hendy Chua and Jason Yeo and Ming Yi Ang and Asankhaya Sharma},
+  journal  = {Proceedings of the 2018 26th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE{\textquotesingle}18)},
+  year     = {2018},
+  pages    = {791–796},
+  numpages = {6},
+  url      = {https://api.semanticscholar.org/CorpusID:53079466}
+}
+
+@inproceedings{type-regression-testing,
+  title     = {Type Regression Testing to Detect Breaking Changes in Node.js Libraries},
+  author    = {Gianluca Mezzetti and Anders M{\o}ller and Martin Toldam Torp},
+  booktitle = {European Conference on Object-Oriented Programming (ECOOP{\textquotesingle}18)},
+  year      = {2018},
+  pages     = {409–419},
+  numpages  = {11}
 }
 
 @inproceedings{model-based-testing,
   author    = {M\o{}ller, Anders and Torp, Martin Toldam},
   title     = {Model-based testing of breaking changes in Node.js libraries},
   year      = {2019},
-  isbn      = {9781450355728},
   publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/3338906.3338940},
-  doi       = {10.1145/3338906.3338940},
-  abstract  = {Semantic versioning is widely used by library developers to indicate whether updates contain changes that may break existing clients. Especially for dynamic languages like JavaScript, using semantic versioning correctly is known to be difficult, which often causes program failures and makes client developers reluctant to switch to new library versions.  The concept of type regression testing has recently been introduced as an automated mechanism to assist the JavaScript library developers. That mechanism is effective for detecting breaking changes in widely used libraries, but it suffers from scalability limitations that make it slow and also less useful for libraries that do not have many available clients.  This paper presents a model-based variant of type regression testing. Instead of comparing API models of a library before and after an update, it finds breaking changes by automatically generating tests from a reusable API model. Experiments show that this new approach significantly improves scalability: it runs faster, and it can find breaking changes in more libraries.},
-  booktitle = {Proceedings of the 2019 27th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering},
+  booktitle = {Proceedings of the 2019 27th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE{\textquotesingle}19)},
   pages     = {409–419},
-  numpages  = {11},
-  keywords  = {JavaScript, semantic versioning},
-  location  = {Tallinn, Estonia},
-  series    = {ESEC/FSE 2019}
-}
-
-@inproceedings{type-regression-testing,
-  title     = {Type Regression Testing to Detect Breaking Changes in Node.js Libraries},
-  author    = {Gianluca Mezzetti and Anders M{\o}ller and Martin Toldam Torp},
-  booktitle = {European Conference on Object-Oriented Programming},
-  year      = {2018},
-  url       = {https://api.semanticscholar.org/CorpusID:51610698}
+  numpages  = {11}
 }
 
 @mastersthesis{detecting-breaking-changes-in-js-apis,
@@ -109,41 +94,25 @@
   url    = {https://api.semanticscholar.org/CorpusID:67442178}
 }
 
-@article{matsuda,
-  title   = {ライブラリのテストケース変更に基づく後方互換性の実証的分析},
-  author  = {松田 和輝 and 伊原 彰紀 and 才木 一也},
-  journal = {ソフトウェア工学の基礎ワークショップ論文集},
-  volume  = {28},
-  number  = { },
-  pages   = {139-144},
-  year    = {2021},
-  doi     = {10.11309/fose.28.0_139}
-}
-
 @article{detecting-locations-in-js,
-  author     = {M\o{}ller, Anders and Nielsen, Benjamin Barslev and Torp, Martin Toldam},
-  title      = {Detecting locations in JavaScript programs affected by breaking library changes},
-  year       = {2020},
-  issue_date = {November 2020},
-  publisher  = {Association for Computing Machinery},
-  address    = {New York, NY, USA},
-  volume     = {4},
-  number     = {OOPSLA},
-  url        = {https://doi.org/10.1145/3428255},
-  doi        = {10.1145/3428255},
-  abstract   = {JavaScript libraries are widely used and evolve rapidly. When adapting client code to non-backwards compatible changes in libraries, a major challenge is how to locate affected API uses in client code, which is currently a difficult manual task. In this paper we address this challenge by introducing a simple pattern language for expressing API access points and a pattern-matching tool based on lightweight static analysis.  Experimental evaluation on 15 popular npm packages shows that typical breaking changes are easy to express as patterns. Running the static analysis on 265 clients of these packages shows that it is accurate and efficient: it reveals usages of breaking APIs with only 14\% false positives and no false negatives, and takes less than a second per client on average. In addition, the analysis is able to report its confidence, which makes it easier to identify the false positives. These results suggest that the approach, despite its simplicity, can reduce the manual effort of the client developers.},
-  journal    = {Proc. ACM Program. Lang.},
-  month      = {nov},
-  articleno  = {187},
-  numpages   = {25},
-  keywords   = {breaking changes, software evolution, software maintenance}
+  author    = {M\o{}ller, Anders and Nielsen, Benjamin Barslev and Torp, Martin Toldam},
+  title     = {Detecting locations in JavaScript programs affected by breaking library changes},
+  year      = {2020},
+  publisher = {Association for Computing Machinery},
+  volume    = {4},
+  number    = {OOPSLA},
+  journal   = {Proceedings of the ACM on Programming Languages (PACMPL{\textquotesingle}20)},
+  month     = {nov},
+  articleno = {187},
+  numpages  = {25},
+  keywords  = {breaking changes, software evolution, software maintenance}
 }
 
 @inproceedings{gumtree,
   author    = {Falleri, Jean-R\'{e}my and Morandat, Flor\'{e}al and Blanc, Xavier and Martinez, Matias and Monperrus, Martin},
   title     = {Fine-Grained and Accurate Source Code Differencing},
   year      = {2014},
-  booktitle = {Proceedings of the 29th ACM/IEEE International Conference on Automated Software Engineering (ASE'14)},
+  booktitle = {Proceedings of the 29th ACM/IEEE International Conference on Automated Software Engineering (ASE{\textquotesingle}14)},
   pages     = {313–324}
 }
 
@@ -151,8 +120,39 @@
   author    = {Mujahid, Suhaib and Abdalkareem, Rabe and Shihab, Emad and McIntosh, Shane},
   title     = {Using Others' Tests to Identify Breaking Updates},
   year      = {2020},
-  booktitle = {Proceedings of the 17th International Conference on Mining Software Repositories (MSR'20)},
+  booktitle = {Proceedings of the 17th International Conference on Mining Software Repositories (MSR{\textquotesingle}20)},
   pages     = {466–476}
+}
+
+@inproceedings{diff-1,
+  author    = {Huang, Kaifeng and Chen, Bihuan and Peng, Xin and Zhou, Daihong and Wang, Ying and Liu, Yang and Zhao, Wenyun},
+  title     = {ClDiff: generating concise linked code differences},
+  year      = {2018},
+  publisher = {Association for Computing Machinery},
+  booktitle = {Proceedings of the 33rd ACM/IEEE International Conference on Automated Software Engineering (ASE{\textquotesingle}18)},
+  pages     = {679–690},
+  numpages  = {12}
+}
+
+@article{diff-2,
+  author  = {Fluri, Beat and Wursch, Michael and PInzger, Martin and Gall, Harald},
+  journal = {IEEE Transactions on Software Engineering (TSE{\textquotesingle}07)},
+  title   = {Change Distilling:Tree Differencing for Fine-Grained Source Code Change Extraction},
+  year    = {2007},
+  volume  = {33},
+  number  = {11},
+  pages   = {725-743}
+}
+
+@inproceedings{diff-3,
+  author    = {Dotzler, Georg and Philippsen, Michael},
+  title     = {Move-optimized source code tree differencing},
+  year      = {2016},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  booktitle = {Proceedings of the 31st IEEE/ACM International Conference on Automated Software Engineering (ASE{\textquotesingle}16)},
+  pages     = {660–671},
+  numpages  = {12}
 }
 
 @article{gumtreenoyatu,
@@ -160,72 +160,19 @@
   title     = {プロジェクト全体の抽象構文木構築によるファイル間の移動コード検出},
   journal   = {電子情報通信学会論文誌D 情報・システム},
   issn      = {1880-4535},
-  publisher = {The Institute of Electronics, Information and Communication Engineers},
+  publisher = {The Institute of Electronics, Information and Communication Engineers (IEICE'21)},
   year      = {2021},
   month     = {04},
   volume    = {J104-D},
   number    = {4},
-  pages     = {242-254},
-  doi       = {10.14923/transinfj.2020pdp0027},
-  url       = {https://cir.nii.ac.jp/crid/1390850475731067264}
+  pages     = {242-254}
 }
 
 @article{js-call-graph,
-  author   = {Antal, Gábor and Hegedűs, Péter and Herczeg, Zoltán and Lóki, Gábor and Ferenc, Rudolf},
-  journal  = {IEEE Access},
-  title    = {Is JavaScript Call Graph Extraction Solved Yet? A Comparative Study of Static and Dynamic Tools},
-  year     = {2023},
-  volume   = {11},
-  number   = {},
-  pages    = {25266-25284},
-  keywords = {Image edge detection;Codes;Performance analysis;Source coding;Static analysis;Servers;Call graph;comparative study;dynamic code analysis;JavaScript;static code analysis},
-  doi      = {10.1109/ACCESS.2023.3255984}
-}
-
-@inproceedings{diff-1,
-  author    = {Huang, Kaifeng and Chen, Bihuan and Peng, Xin and Zhou, Daihong and Wang, Ying and Liu, Yang and Zhao, Wenyun},
-  title     = {ClDiff: generating concise linked code differences},
-  year      = {2018},
-  isbn      = {9781450359375},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/3238147.3238219},
-  doi       = {10.1145/3238147.3238219},
-  abstract  = {Analyzing and understanding source code changes is important in a variety of software maintenance tasks. To this end, many code differencing and code change summarization methods have been proposed. For some tasks (e.g. code review and software merging), however, those differencing methods generate too fine-grained a representation of code changes, and those summarization methods generate too coarse-grained a representation of code changes. Moreover, they do not consider the relationships among code changes. Therefore, the generated differences or summaries make it not easy to analyze and understand code changes in some software maintenance tasks.  In this paper, we propose a code differencing approach, named CLDIFF, to generate concise linked code differences whose granularity is in between the existing code differencing and code change summarization methods. The goal of CLDIFF is to generate more easily understandable code differences. CLDIFF takes source code files before and after changes as inputs, and consists of three steps. First, it pre-processes the source code files by pruning unchanged declara- tions from the parsed abstract syntax trees. Second, it generates concise code differences by grouping fine-grained code differences at or above the statement level and describing high-level changes in each group. Third, it links the related concise code differences according to five pre-defined links. Experiments with 12 Java projects (74,387 commits) and a human study with 10 participants have indicated the accuracy, conciseness, performance and usefulness of CLDIFF.},
-  booktitle = {Proceedings of the 33rd ACM/IEEE International Conference on Automated Software Engineering},
-  pages     = {679–690},
-  numpages  = {12},
-  keywords  = {Program Comprehension, Code Differencing, AST},
-  location  = {Montpellier, France},
-  series    = {ASE '18}
-}
-
-@article{diff-2,
-  author   = {Fluri, Beat and Wursch, Michael and PInzger, Martin and Gall, Harald},
-  journal  = {IEEE Transactions on Software Engineering},
-  title    = {Change Distilling:Tree Differencing for Fine-Grained Source Code Change Extraction},
-  year     = {2007},
-  volume   = {33},
-  number   = {11},
-  pages    = {725-743},
-  keywords = {Data mining;Taxonomy;Software maintenance;Programming profession;Software algorithms;Algorithm design and analysis;Software tools;Maintenance engineering;Software systems;History;Source code change extraction;tree differencing algorithms;software repositories;software evolution analysis},
-  doi      = {10.1109/TSE.2007.70731}
-}
-
-@inproceedings{diff-3,
-  author    = {Dotzler, Georg and Philippsen, Michael},
-  title     = {Move-optimized source code tree differencing},
-  year      = {2016},
-  isbn      = {9781450338455},
-  publisher = {Association for Computing Machinery},
-  address   = {New York, NY, USA},
-  url       = {https://doi.org/10.1145/2970276.2970315},
-  doi       = {10.1145/2970276.2970315},
-  abstract  = {When it is necessary to express changes between two source code files as a list of edit actions (an edit script), modern tree differencing algorithms are superior to most text-based approaches because they take code movements into account and express source code changes more accurately. We present 5 general optimizations that can be added to state-of-the-art tree differencing algorithms to shorten the resulting edit scripts. Applied to Gumtree, RTED, JSync, and ChangeDistiller, they lead to shorter scripts for 18-98\% of the changes in the histories of 9 open-source software repositories. These optimizations also are parts of our novel Move-optimized Tree DIFFerencing algorithm (MTDIFF) that has a higher accuracy in detecting moved code parts. MTDIFF (which is based on the ideas of ChangeDistiller) further shortens the edit script for another 20\% of the changes in the repositories. MTDIFF and all the benchmarks are available under an open-source license.},
-  booktitle = {Proceedings of the 31st IEEE/ACM International Conference on Automated Software Engineering},
-  pages     = {660–671},
-  numpages  = {12},
-  keywords  = {Optimizations, Source Code, Tree Differencing},
-  location  = {Singapore, Singapore},
-  series    = {ASE '16}
+  author  = {Antal, Gábor and Hegedűs, Péter and Herczeg, Zoltán and Lóki, Gábor and Ferenc, Rudolf},
+  journal = {IEEE Access},
+  title   = {Is JavaScript Call Graph Extraction Solved Yet? A Comparative Study of Static and Dynamic Tools},
+  year    = {2023},
+  volume  = {11},
+  pages   = {25266-25284}
 }
