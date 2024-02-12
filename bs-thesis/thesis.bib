@@ -181,3 +181,51 @@
   keywords = {Image edge detection;Codes;Performance analysis;Source coding;Static analysis;Servers;Call graph;comparative study;dynamic code analysis;JavaScript;static code analysis},
   doi      = {10.1109/ACCESS.2023.3255984}
 }
+
+@inproceedings{diff-1,
+  author    = {Huang, Kaifeng and Chen, Bihuan and Peng, Xin and Zhou, Daihong and Wang, Ying and Liu, Yang and Zhao, Wenyun},
+  title     = {ClDiff: generating concise linked code differences},
+  year      = {2018},
+  isbn      = {9781450359375},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/3238147.3238219},
+  doi       = {10.1145/3238147.3238219},
+  abstract  = {Analyzing and understanding source code changes is important in a variety of software maintenance tasks. To this end, many code differencing and code change summarization methods have been proposed. For some tasks (e.g. code review and software merging), however, those differencing methods generate too fine-grained a representation of code changes, and those summarization methods generate too coarse-grained a representation of code changes. Moreover, they do not consider the relationships among code changes. Therefore, the generated differences or summaries make it not easy to analyze and understand code changes in some software maintenance tasks.  In this paper, we propose a code differencing approach, named CLDIFF, to generate concise linked code differences whose granularity is in between the existing code differencing and code change summarization methods. The goal of CLDIFF is to generate more easily understandable code differences. CLDIFF takes source code files before and after changes as inputs, and consists of three steps. First, it pre-processes the source code files by pruning unchanged declara- tions from the parsed abstract syntax trees. Second, it generates concise code differences by grouping fine-grained code differences at or above the statement level and describing high-level changes in each group. Third, it links the related concise code differences according to five pre-defined links. Experiments with 12 Java projects (74,387 commits) and a human study with 10 participants have indicated the accuracy, conciseness, performance and usefulness of CLDIFF.},
+  booktitle = {Proceedings of the 33rd ACM/IEEE International Conference on Automated Software Engineering},
+  pages     = {679–690},
+  numpages  = {12},
+  keywords  = {Program Comprehension, Code Differencing, AST},
+  location  = {Montpellier, France},
+  series    = {ASE '18}
+}
+
+@article{diff-2,
+  author   = {Fluri, Beat and Wursch, Michael and PInzger, Martin and Gall, Harald},
+  journal  = {IEEE Transactions on Software Engineering},
+  title    = {Change Distilling:Tree Differencing for Fine-Grained Source Code Change Extraction},
+  year     = {2007},
+  volume   = {33},
+  number   = {11},
+  pages    = {725-743},
+  keywords = {Data mining;Taxonomy;Software maintenance;Programming profession;Software algorithms;Algorithm design and analysis;Software tools;Maintenance engineering;Software systems;History;Source code change extraction;tree differencing algorithms;software repositories;software evolution analysis},
+  doi      = {10.1109/TSE.2007.70731}
+}
+
+@inproceedings{diff-3,
+  author    = {Dotzler, Georg and Philippsen, Michael},
+  title     = {Move-optimized source code tree differencing},
+  year      = {2016},
+  isbn      = {9781450338455},
+  publisher = {Association for Computing Machinery},
+  address   = {New York, NY, USA},
+  url       = {https://doi.org/10.1145/2970276.2970315},
+  doi       = {10.1145/2970276.2970315},
+  abstract  = {When it is necessary to express changes between two source code files as a list of edit actions (an edit script), modern tree differencing algorithms are superior to most text-based approaches because they take code movements into account and express source code changes more accurately. We present 5 general optimizations that can be added to state-of-the-art tree differencing algorithms to shorten the resulting edit scripts. Applied to Gumtree, RTED, JSync, and ChangeDistiller, they lead to shorter scripts for 18-98\% of the changes in the histories of 9 open-source software repositories. These optimizations also are parts of our novel Move-optimized Tree DIFFerencing algorithm (MTDIFF) that has a higher accuracy in detecting moved code parts. MTDIFF (which is based on the ideas of ChangeDistiller) further shortens the edit script for another 20\% of the changes in the repositories. MTDIFF and all the benchmarks are available under an open-source license.},
+  booktitle = {Proceedings of the 31st IEEE/ACM International Conference on Automated Software Engineering},
+  pages     = {660–671},
+  numpages  = {12},
+  keywords  = {Optimizations, Source Code, Tree Differencing},
+  location  = {Singapore, Singapore},
+  series    = {ASE '16}
+}
